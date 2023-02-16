@@ -7,7 +7,7 @@ dotenv.config()
 
 import Lesson from './models/Lesson.js'
 import Schedule from './models/Schedule.js'
-import * as DayLesson from './controllers/dayLessonController.js'
+import * as DayLesson from './controllers/DayLessonController.js'
 import * as WeekLesson from './controllers/WeekLessonController.js'
 import * as DaySchedule from './controllers/ScheduleController.js'
 
