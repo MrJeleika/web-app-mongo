@@ -108,7 +108,7 @@ app.patch('/lessons', async (req, res) => {
   }
 })
 
-app.listen(3001, (err) => {
+app.listen(process.env.PORT || 3001, (err) => {
   if (err) {
     return console.log(err)
   }
