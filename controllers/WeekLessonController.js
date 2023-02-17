@@ -41,3 +41,17 @@ export const deleteWeekLesson = async (req, res) => {
     })
   }
 }
+
+export const changeWeekLesson = async (req, res) => {
+  try {
+    const { _id, ...lesson } = req.body
+    Lesson.findOneAndUpdate({ _id }, lesson, (err, result) => {
+      if (err) res.status(403).json(err)
+      res.json(result)
+    }).populate('schedule')
+  } catch (error) {
+    res.status(404).res.json({
+      message: "Couldn't change lesson",
+    })
+  }
+}

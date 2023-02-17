@@ -46,6 +46,7 @@ app.get('/schedules', async (req, res) => {
 
 app.post('/weekLesson', WeekLesson.addWeekLesson)
 app.delete('/weekLesson', WeekLesson.deleteWeekLesson)
+app.patch('/weekLesson', WeekLesson.changeWeekLesson)
 
 app.delete('/dayLesson', DayLesson.deleteDayLesson)
 app.patch('/dayLesson', DayLesson.changeDayLesson)
