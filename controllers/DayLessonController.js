@@ -67,10 +67,13 @@ export const changeDayLesson = async (req, res) => {
 export const deleteDayLesson = async (req, res) => {
   const { _id, lessonId, date } = req.body
   try {
-    let lesson = await Lesson.findOne({ _id: lessonId })
+    let lesson = await Schedule.findOne({
+      _id,
+      exceptions: { _id: lessonId },
+    })
     if (!lesson) {
       // if not found in week Schedule search in exceptions
-      let lesson = Schedule.findOne({ _id, exceptions: { _id: lessonId } })
+      let lesson = await Lesson.findOne({ _id: lessonId })
       if (!lesson)
         res
           .status(404)

@@ -40,6 +40,7 @@ app.get('/schedules', async (req, res) => {
     })
     .exec((err, schedule) => {
       if (err) res.json(err)
+
       res.json(schedule)
     })
 })
