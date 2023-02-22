@@ -74,7 +74,7 @@ export const deleteDayLesson = async (req, res) => {
       {
         exceptions: { _id: lessonId },
       }
-    ).exec()
+    )
     if (!lesson) {
       // if not found in week Schedule search in exceptions
       let lesson = await Lesson.findOne({ _id: lessonId })
