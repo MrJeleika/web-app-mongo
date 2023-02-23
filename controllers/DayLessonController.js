@@ -23,23 +23,26 @@ export const addDayLesson = async (req, res) => {
 }
 
 export const changeDayLesson = async (req, res) => {
-  const { _id, lessonId, date, time, teacher, name, type } = req.body
+  const { _id, lessonId, date, time, teacher, lesson, type } = req.body
   try {
-    let lesson = await Lesson.findOne({ _id: lessonId })
+    let schedule = await Schedule.findOne({ _id })
+
+    let lesson = schedule.exceptions.find((ex) => ex._id.equals(lessonId))
+
     if (!lesson) {
       // if not found in week Schedule search in exceptions
-      let lesson = Schedule.findOne({ _id, exceptions: { _id: lessonId } })
+      lesson = await Lesson.findOne({ _id: lessonId })
+
       if (!lesson)
         res
           .status(404)
           .res.json({ message: "Couldn't find lesson with such id" })
-      return lesson
     }
 
     lesson.time = time
     lesson.date = date
     lesson.teacher = teacher
-    lesson.lesson = name
+    lesson.lesson = lesson
     lesson.type = type
 
     Schedule.findOneAndUpdate(
@@ -49,6 +52,7 @@ export const changeDayLesson = async (req, res) => {
       },
       (err, result) => {
         if (err) res.status(403).json(err)
+        result.save()
         Schedule.findOneAndUpdate(
           { _id },
           { $push: { exceptions: lesson } },
