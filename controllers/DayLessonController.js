@@ -24,6 +24,7 @@ export const addDayLesson = async (req, res) => {
 
 export const changeDayLesson = async (req, res) => {
   const { _id, lessonId, date, time, teacher, lesson, type } = req.body
+  const lessonName = lesson
   try {
     let schedule = await Schedule.findOne({ _id })
 
@@ -42,7 +43,7 @@ export const changeDayLesson = async (req, res) => {
     lesson.time = time
     lesson.date = date
     lesson.teacher = teacher
-    lesson.lesson = lesson
+    lesson.lesson = lessonName
     lesson.type = type
 
     Schedule.findOneAndUpdate(
@@ -52,7 +53,7 @@ export const changeDayLesson = async (req, res) => {
       },
       (err, result) => {
         if (err) res.status(403).json(err)
-        result.save()
+
         Schedule.findOneAndUpdate(
           { _id },
           { $push: { exceptions: lesson } },
